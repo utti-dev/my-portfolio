@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply min-h-screen bg-brand-dark text-brand-light font-sans;
+}
+
+.globe-alt {
+  position: relative;
+  width: min(320px, 90vw);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  --lat: 0;
+  --lon: 0;
+}
+
+.globe-alt__sphere {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(
+    circle at 30% 25%,
+    #e7f5f5 0%,
+    rgba(231, 245, 245, 0.8) 55%,
+    rgba(249, 217, 74, 0.35) 100%
+  );
+  border: 1px solid rgba(38, 35, 65, 0.15);
+  box-shadow: 0 20px 40px rgba(38, 35, 65, 0.2);
+}
+
+.globe-alt__spin {
+  position: absolute;
+  inset: 0;
+  transform-origin: center;
+  animation: globe-spin 2.4s ease-out both;
+}
+
+.globe-alt__map {
+  position: absolute;
+  left: 0;
+  top: 25%;
+  width: 100%;
+  height: 50%;
+  background-color: rgba(38, 35, 65, 0.6);
+  mask-image: url("https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 100% 100%;
+  -webkit-mask-image: url("https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 100% 100%;
+  opacity: 0.65;
+}
+
+.globe-alt__grid {
+  position: absolute;
+  inset: -10%;
+  background-image: repeating-linear-gradient(
+      90deg,
+      rgba(38, 35, 65, 0.18) 0,
+      rgba(38, 35, 65, 0.18) 1px,
+      transparent 1px,
+      transparent 22px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(38, 35, 65, 0.15) 0,
+      rgba(38, 35, 65, 0.15) 1px,
+      transparent 1px,
+      transparent 22px
+    );
+  opacity: 0.45;
+}
+
+.globe-alt__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 70% 65%,
+    rgba(231, 245, 245, 0) 0%,
+    rgba(38, 35, 65, 0.2) 55%,
+    rgba(38, 35, 65, 0.35) 100%
+  );
+  mix-blend-mode: multiply;
+}
+
+.globe-alt__halo {
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  border: 1px dashed rgba(249, 217, 74, 0.6);
+  pointer-events: none;
+}
+
+.globe-alt__marker {
+  position: absolute;
+  left: calc((var(--lon) + 180) * 100% / 360);
+  top: calc((90 - var(--lat)) * 100% / 180);
+  transform: translate(-50%, -50%);
+  animation: marker-pop 0.6s ease-out 2.3s both;
+}
+
+.globe-alt__marker span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f9d94a;
+  box-shadow: 0 0 0 4px rgba(249, 217, 74, 0.35);
+}
+
+.globe-alt__marker::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 1px solid rgba(249, 217, 74, 0.7);
+  animation: marker-pulse 1.6s ease-out 2s infinite;
+}
+
+@keyframes globe-spin {
+  0% {
+    transform: rotate(-28deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes marker-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes marker-pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.6);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-alt__map,
+  .globe-alt__grid,
+  .globe-alt__spin,
+  .globe-alt__marker,
+  .globe-alt__marker::after,
+  .globe-alt__halo {
+    animation: none;
+  }
+}
+
