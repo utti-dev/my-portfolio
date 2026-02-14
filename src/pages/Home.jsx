@@ -1,8 +1,58 @@
+import { useEffect, useRef, useState } from "react";
 import LiveLocationCard from "../components/LiveLocationCard.jsx";
 import profileImage from "../assets/profile.png";
 import resumePdf from "../assets/Utti_Ramesh_Resume.pdf.pdf";
 
+const ROLE_WORDS = [
+  { display: "Frontend", sentence: "frontend" },
+  { display: "Software", sentence: "software" },
+  { display: "Full-stack", sentence: "full-stack" },
+  { display: "Web", sentence: "web" },
+  { display: "UI", sentence: "UI" },
+  { display: "React", sentence: "React" },
+];
+
+const CHANGE_INTERVAL = 2800;
+const FADE_DURATION = 220;
+
 function Home() {
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [isRoleVisible, setIsRoleVisible] = useState(true);
+  const hideTimeoutRef = useRef(null);
+  const showTimeoutRef = useRef(null);
+  const activeRole = ROLE_WORDS[roleIndex];
+
+  useEffect(() => {
+    const switchRole = () => {
+      setIsRoleVisible(false);
+      window.clearTimeout(hideTimeoutRef.current);
+      window.clearTimeout(showTimeoutRef.current);
+
+      hideTimeoutRef.current = window.setTimeout(() => {
+        setRoleIndex((prev) => {
+          if (ROLE_WORDS.length <= 1) {
+            return prev;
+          }
+          let next = Math.floor(Math.random() * ROLE_WORDS.length);
+          if (next === prev) {
+            next = (prev + 1) % ROLE_WORDS.length;
+          }
+          return next;
+        });
+        showTimeoutRef.current = window.setTimeout(() => {
+          setIsRoleVisible(true);
+        }, 30);
+      }, FADE_DURATION);
+    };
+
+    const intervalId = window.setInterval(switchRole, CHANGE_INTERVAL);
+    return () => {
+      window.clearInterval(intervalId);
+      window.clearTimeout(hideTimeoutRef.current);
+      window.clearTimeout(showTimeoutRef.current);
+    };
+  }, []);
+
   return (
     <section
       className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,420px)]"
@@ -10,16 +60,28 @@ function Home() {
     >
       <section className="space-y-6 animate-fade-up motion-reduce:animate-none">
         <span className="text-sm font-medium text-brand-light/70">
-          Hey, I'm Luca
+          Hey, I'm Utti Ramesh
         </span>
         <h1 className="text-4xl font-semibold leading-tight tracking-tight text-brand-light sm:text-5xl lg:text-6xl">
-          <span className="text-brand-accent">Frontend</span>
+          <span
+            className={`text-brand-accent role-word ${isRoleVisible ? "" : "role-word--hidden"}`}
+            aria-live="polite"
+          >
+            {activeRole.display}
+          </span>
           <br />
           Developer
         </h1>
         <p className="max-w-xl text-base leading-relaxed text-brand-light/70 sm:text-lg">
-          I'm a frontend developer based in Italy, I'll help you build
-          beautiful websites your users will love.
+          I'm a{" "}
+          <span
+            className={`role-word ${isRoleVisible ? "" : "role-word--hidden"}`}
+            aria-live="polite"
+          >
+            {activeRole.sentence}
+          </span>{" "}
+          developer based in Hyderabad, India. I help teams build accessible,
+          performance-first web experiences users love.
         </p>
         <div className="flex flex-wrap items-center gap-4 pt-2">
           <a
@@ -82,7 +144,7 @@ function Home() {
           <img
             className="h-full w-full object-cover grayscale"
             src={profileImage}
-            alt=""
+            alt="Portrait of Utti Ramesh"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent" />
           <div className="absolute bottom-6 left-6 right-6 space-y-2">

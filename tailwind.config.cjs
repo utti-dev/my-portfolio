@@ -7,9 +7,9 @@ module.exports = {
       },
       colors: {
         brand: {
-          dark: "#262341",
-          accent: "#F9D94A",
-          light: "#E7F5F5",
+          dark: "rgb(var(--color-brand-dark) / <alpha-value>)",
+          accent: "rgb(var(--color-brand-accent) / <alpha-value>)",
+          light: "rgb(var(--color-brand-light) / <alpha-value>)",
         },
       },
       keyframes: {

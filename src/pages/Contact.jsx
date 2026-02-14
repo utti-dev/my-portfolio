@@ -53,8 +53,8 @@ function Contact() {
         <div className="space-y-4">
           {[
             { label: "Email", value: "uttiramesh53@gmail.com" },
-            { label: "Phone", value: "+39 123 456 7890" },
-            { label: "Location", value: "Milan, Italy" },
+            { label: "Timezone", value: "IST (UTC+5:30)" },
+            { label: "Location", value: "Hyderabad, India" },
           ].map((item) => (
             <div
               key={item.label}

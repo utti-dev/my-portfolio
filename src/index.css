@@ -2,8 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+  --color-brand-dark: 38 35 65;
+  --color-brand-accent: 249 217 74;
+  --color-brand-light: 231 245 245;
+}
+
+.theme-light {
+  color-scheme: light;
+  --color-brand-dark: 245 247 251;
+  --color-brand-accent: 245 196 31;
+  --color-brand-light: 27 24 45;
+}
+
 body {
-  @apply min-h-screen bg-brand-dark text-brand-light font-sans;
+  @apply min-h-screen bg-brand-dark text-brand-light font-sans transition-colors duration-300;
+}
+
+.role-word {
+  display: inline-block;
+  transition: opacity 220ms ease, transform 220ms ease;
+  will-change: opacity, transform;
+}
+
+.role-word--hidden {
+  opacity: 0;
+  transform: translateY(8px);
 }
 
 html {
