@@ -49,11 +49,11 @@ function Skills() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 sm:grid sm:snap-none sm:overflow-visible sm:pb-0 sm:grid-cols-2">
           {SKILLS.map((skill, index) => (
             <div
               key={skill.label}
-              className="group rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-6 shadow-[0_12px_24px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_32px_rgba(0,0,0,0.45)] animate-fade-up motion-reduce:animate-none"
+              className="card-surface group min-w-[85%] flex-shrink-0 snap-start p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_36px_rgba(0,0,0,0.35)] animate-fade-up motion-reduce:animate-none sm:min-w-0 sm:flex-shrink sm:snap-none"
               style={{ animationDelay: `${index * 120}ms` }}
             >
               <div className="flex items-center justify-between text-sm font-semibold text-brand-light/80">
@@ -71,7 +71,7 @@ function Skills() {
           ))}
         </div>
 
-        <div className="space-y-5 rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-6 shadow-[0_12px_24px_rgba(0,0,0,0.35)]">
+        <div className="card-surface space-y-5 p-6">
           <div>
             <h3 className="text-lg font-semibold text-brand-light">Toolbox</h3>
             <p className="mt-2 text-sm text-brand-light/70">

@@ -64,11 +64,11 @@ function Projects() {
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:flex-col md:overflow-visible">
         {PROJECTS.map((project, index) => (
           <article
             key={project.title}
-            className="rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-6 shadow-[0_12px_24px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_32px_rgba(0,0,0,0.45)]"
+            className="card-surface min-w-[85%] flex-shrink-0 snap-start p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_36px_rgba(0,0,0,0.35)] sm:min-w-[70%] md:min-w-0 md:flex-shrink md:snap-none"
           >
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>

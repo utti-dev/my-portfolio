@@ -16,7 +16,7 @@ function Contact() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <form className="space-y-4 rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-6 shadow-[0_12px_24px_rgba(0,0,0,0.35)]">
+        <form className="card-surface space-y-4 p-6">
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="space-y-2 text-sm font-medium text-brand-light/70">
               Name
@@ -43,7 +43,7 @@ function Contact() {
             />
           </label>
           <button
-            className="w-full rounded-xl border border-brand-accent/70 bg-brand-accent/15 px-5 py-3 text-sm font-semibold text-brand-accent shadow-[0_14px_28px_rgba(0,0,0,0.4)] transition hover:-translate-y-0.5 hover:bg-brand-accent/25 sm:w-auto"
+            className="btn-primary w-full rounded-xl px-5 py-3 text-sm font-semibold shadow-[0_14px_28px_rgba(0,0,0,0.4)] transition hover:-translate-y-0.5 sm:w-auto"
             type="submit"
           >
             Send Message
@@ -58,7 +58,7 @@ function Contact() {
           ].map((item) => (
             <div
               key={item.label}
-              className="rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-6 shadow-[0_12px_24px_rgba(0,0,0,0.35)]"
+              className="card-surface p-6"
             >
               <p className="text-xs font-semibold uppercase tracking-widest text-brand-light/50">
                 {item.label}
@@ -68,7 +68,7 @@ function Contact() {
               </p>
             </div>
           ))}
-          <div className="rounded-2xl border border-brand-accent/40 bg-brand-accent/15 p-6 text-sm text-brand-light">
+          <div className="card-surface p-6 text-sm text-brand-light">
             Available for new freelance projects starting next month.
           </div>
         </div>

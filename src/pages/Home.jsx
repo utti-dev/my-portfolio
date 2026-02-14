@@ -85,19 +85,19 @@ function Home() {
         </p>
         <div className="flex flex-wrap items-center gap-4 pt-2">
           <a
-            className="rounded-xl border border-brand-accent/70 bg-brand-accent/10 px-5 py-3 text-sm font-semibold text-brand-accent shadow-[0_14px_28px_rgba(0,0,0,0.4)] transition hover:-translate-y-0.5 hover:bg-brand-accent/20"
+            className="btn-primary rounded-xl px-5 py-3 text-sm font-semibold shadow-[0_14px_28px_rgba(0,0,0,0.4)] transition hover:-translate-y-0.5"
             href="mailto:uttiramesh53@gmail.com"
           >
             Get in Touch
           </a>
           <a
-            className="rounded-xl border border-brand-light/30 bg-brand-dark/50 px-5 py-3 text-sm font-semibold text-brand-light shadow-[0_12px_24px_rgba(0,0,0,0.35)] transition hover:-translate-y-0.5"
+            className="btn-secondary rounded-xl px-5 py-3 text-sm font-semibold shadow-[0_12px_24px_rgba(0,0,0,0.35)] transition hover:-translate-y-0.5"
             href="#projects"
           >
             Browse Projects
           </a>
           <a
-            className="rounded-xl border border-brand-accent/50 bg-transparent px-5 py-3 text-sm font-semibold text-brand-accent transition hover:-translate-y-0.5 hover:bg-brand-accent/10"
+            className="btn-ghost rounded-xl px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5"
             href={resumePdf}
             download
           >

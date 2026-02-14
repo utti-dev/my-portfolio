@@ -1,20 +1,28 @@
 import { useEffect, useState } from "react";
-import { isSignInWithEmailLink } from "firebase/auth";
+import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
+import {
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Experience from "./pages/Experience.jsx";
 import Projects from "./pages/Projects.jsx";
-import Services from "./pages/Services.jsx";
-import Testimonials from "./pages/Testimonials.jsx";
 import Skills from "./pages/Skills.jsx";
 import Contact from "./pages/Contact.jsx";
 import OtpModal from "./components/OtpModal.jsx";
-import { auth } from "./lib/firebase";
+import { auth, db } from "./lib/firebase";
+import LogoMark from "./components/LogoMark.jsx";
 
 function Layout() {
   const [activeSection, setActiveSection] = useState("home");
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [isOtpOpen, setIsOtpOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [themeMode, setThemeMode] = useState(() => {
     if (typeof window === "undefined") {
       return "auto";
@@ -36,12 +44,14 @@ function Layout() {
 
   const resolvedTheme = themeMode === "auto" ? autoTheme : themeMode;
 
+  const showToast = (message) => {
+    setToastMessage(message);
+  };
+
   useEffect(() => {
     const sectionIds = [
       "home",
       "projects",
-      "services",
-      "testimonials",
       "experience",
       "skills",
       "about",
@@ -76,6 +86,19 @@ function Layout() {
   }, []);
 
   useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return;
+    }
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
     const stored = window.localStorage.getItem("portfolioUnlocked");
     if (stored === "true") {
       setIsUnlocked(true);
@@ -86,10 +109,70 @@ function Layout() {
     if (typeof window === "undefined") {
       return;
     }
-    if (isSignInWithEmailLink(auth, window.location.href)) {
-      setIsOtpOpen(true);
+    const hasEmailLink = isSignInWithEmailLink(auth, window.location.href);
+    if (!hasEmailLink) {
+      return;
     }
+    const storedEmail = window.localStorage.getItem("otpEmail");
+    const storedConsent = window.localStorage.getItem("otpConsent") === "true";
+    if (!storedEmail || !storedConsent) {
+      setIsOtpOpen(true);
+      return;
+    }
+    const complete = async () => {
+      try {
+        const credential = await signInWithEmailLink(
+          auth,
+          storedEmail,
+          window.location.href
+        );
+        const user = credential?.user;
+        if (user) {
+          const visitorRef = doc(db, "visitors", user.uid);
+          const existing = await getDoc(visitorRef);
+          if (existing.exists()) {
+            await updateDoc(visitorRef, {
+              lastSeen: serverTimestamp(),
+              email: user.email || storedEmail,
+            });
+          } else {
+            await setDoc(visitorRef, {
+              email: user.email || storedEmail,
+              createdAt: serverTimestamp(),
+              lastSeen: serverTimestamp(),
+              userAgent: navigator.userAgent,
+            });
+          }
+        }
+        window.localStorage.removeItem("otpEmail");
+        window.localStorage.removeItem("otpConsent");
+        if (window.location.search) {
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+          );
+        }
+        setIsUnlocked(true);
+        setIsOtpOpen(false);
+        window.localStorage.setItem("portfolioUnlocked", "true");
+        showToast("Access verified. Full portfolio unlocked.");
+      } catch (error) {
+        setIsOtpOpen(true);
+      }
+    };
+    void complete();
   }, []);
+
+  useEffect(() => {
+    if (!toastMessage) {
+      return undefined;
+    }
+    const timer = window.setTimeout(() => {
+      setToastMessage("");
+    }, 3200);
+    return () => window.clearTimeout(timer);
+  }, [toastMessage]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -189,8 +272,8 @@ function Layout() {
     <div className="min-h-screen bg-brand-dark text-brand-light">
       <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-16 px-6 py-8 sm:px-10 lg:px-14">
         <header className="flex items-center justify-between">
-          <a className="text-base font-semibold tracking-wide text-brand-light" href="#home">
-            Utti Ramesh
+          <a className="flex items-center text-brand-accent" href="#home" aria-label="Home">
+            <LogoMark className="h-9 w-9 sm:h-10 sm:w-10" />
           </a>
           <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
             <a
@@ -212,26 +295,6 @@ function Layout() {
               href="#projects"
             >
               Projects
-            </a>
-            <a
-              className={
-                activeSection === "services"
-                  ? "text-brand-accent"
-                  : "text-brand-light/70 transition hover:text-brand-light"
-              }
-              href="#services"
-            >
-              Services
-            </a>
-            <a
-              className={
-                activeSection === "testimonials"
-                  ? "text-brand-accent"
-                  : "text-brand-light/70 transition hover:text-brand-light"
-              }
-              href="#testimonials"
-            >
-              Testimonials
             </a>
             <a
               className={
@@ -274,51 +337,88 @@ function Layout() {
               Contact
             </a>
           </nav>
-          <button
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-brand-light/30 bg-brand-dark/70 shadow-[0_8px_16px_rgba(0,0,0,0.4)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(0,0,0,0.5)]"
-            type="button"
-            onClick={toggleTheme}
-            aria-label={`Theme mode: ${themeMode}. Click to switch`}
-          >
-            <span className="sr-only">
-              Theme mode {themeMode}. Click to switch.
-            </span>
-            {resolvedTheme === "light" ? (
-              <svg
-                viewBox="0 0 24 24"
-                className="h-4 w-4 text-brand-accent"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M21 12.8A8.5 8.5 0 0 1 11.2 3a7 7 0 1 0 9.8 9.8Z" />
-              </svg>
-            ) : (
-              <svg
-                viewBox="0 0 24 24"
-                className="h-4 w-4 text-brand-accent"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="4" />
-                <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-              </svg>
-            )}
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-brand-light/30 bg-brand-dark/70 shadow-[0_8px_16px_rgba(0,0,0,0.4)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(0,0,0,0.5)]"
+              type="button"
+              onClick={toggleTheme}
+              aria-label={`Theme mode: ${themeMode}. Click to switch`}
+            >
+              <span className="sr-only">
+                Theme mode {themeMode}. Click to switch.
+              </span>
+              {resolvedTheme === "light" ? (
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4 text-brand-accent"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M21 12.8A8.5 8.5 0 0 1 11.2 3a7 7 0 1 0 9.8 9.8Z" />
+                </svg>
+              ) : (
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4 text-brand-accent"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+                </svg>
+              )}
+            </button>
+            <button
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-brand-light/30 bg-brand-dark/70 text-brand-light shadow-[0_8px_16px_rgba(0,0,0,0.4)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(0,0,0,0.5)] md:hidden"
+              type="button"
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? "✕" : "☰"}
+            </button>
+          </div>
         </header>
+
+        {isMobileMenuOpen && (
+          <nav className="md:hidden">
+            <div className="card-surface space-y-2 p-4 text-sm font-semibold text-brand-light">
+              {[
+                { id: "home", label: "Home" },
+                { id: "projects", label: "Projects" },
+                { id: "experience", label: "Experience" },
+                { id: "skills", label: "Skills" },
+                { id: "about", label: "About" },
+                { id: "contact", label: "Contact" },
+              ].map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={
+                    activeSection === item.id
+                      ? "block rounded-lg bg-brand-accent/20 px-3 py-2 text-brand-accent"
+                      : "block rounded-lg px-3 py-2 text-brand-light/80 hover:text-brand-light"
+                  }
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </nav>
+        )}
 
         <main className="flex flex-col gap-16">
           <Home />
           <Projects />
-          <Services />
-          <Testimonials />
 
           <div className="relative">
             <div
@@ -381,7 +481,14 @@ function Layout() {
         isOpen={isOtpOpen}
         onClose={() => setIsOtpOpen(false)}
         onVerified={handleUnlock}
+        onToast={showToast}
       />
+
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 rounded-xl border border-brand-light/15 bg-brand-dark/90 px-4 py-3 text-sm text-brand-light shadow-[0_12px_24px_rgba(0,0,0,0.4)]">
+          {toastMessage}
+        </div>
+      )}
     </div>
   );
 }

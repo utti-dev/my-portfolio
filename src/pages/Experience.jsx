@@ -61,11 +61,11 @@ function Experience() {
         </p>
       </div>
 
-      <div className="space-y-6">
+      <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 md:flex-col md:overflow-visible">
         {EXPERIENCE.map((item, index) => (
           <article
             key={`${item.company}-${item.role}`}
-            className="group rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-6 shadow-[0_12px_24px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_32px_rgba(0,0,0,0.45)] animate-fade-up motion-reduce:animate-none"
+            className="card-surface group min-w-[85%] flex-shrink-0 snap-start p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_36px_rgba(0,0,0,0.35)] animate-fade-up motion-reduce:animate-none sm:min-w-[70%] md:min-w-0 md:flex-shrink md:snap-none"
             style={{ animationDelay: `${index * 120}ms` }}
           >
             <div className="flex flex-wrap items-center justify-between gap-3">

@@ -1,22 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  isSignInWithEmailLink,
-  sendSignInLinkToEmail,
-  signInWithEmailLink,
-} from "firebase/auth";
-import {
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { auth, db } from "../lib/firebase";
+import { sendSignInLinkToEmail } from "firebase/auth";
+import { auth } from "../lib/firebase";
 
-function OtpModal({ isOpen, onClose, onVerified }) {
+function OtpModal({ isOpen, onClose, onVerified, onToast }) {
   const [step, setStep] = useState("email");
   const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,26 +23,12 @@ function OtpModal({ isOpen, onClose, onVerified }) {
     if (isOpen) {
       setStep("email");
       setEmail("");
-      setCode("");
       setStatus("");
       setError("");
       setLoading(false);
       setConsent(false);
     }
   }, [isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-    if (isSignInWithEmailLink(auth, window.location.href)) {
-      setStep("complete");
-      const stored = window.localStorage.getItem("otpEmail");
-      if (stored && !email) {
-        setEmail(stored);
-      }
-    }
-  }, [isOpen, email]);
 
   if (!isOpen) {
     return null;
@@ -85,8 +59,11 @@ function OtpModal({ isOpen, onClose, onVerified }) {
     }
 
     if (bypassEnabled) {
-      setStatus("Dev mode enabled. Use code " + bypassCode + ".");
-      setStep("code");
+      setStatus("Dev mode enabled. Click Unlock to proceed.");
+      setStep("sent");
+      if (onToast) {
+        onToast("Dev mode enabled. You can unlock now.");
+      }
       setLoading(false);
       return;
     }
@@ -97,83 +74,14 @@ function OtpModal({ isOpen, onClose, onVerified }) {
         handleCodeInApp: true,
       });
       window.localStorage.setItem("otpEmail", email);
+      window.localStorage.setItem("otpConsent", "true");
       setStatus("Magic link sent. Check your email to continue.");
-      setStep("complete");
+      if (onToast) {
+        onToast("Magic link sent. Check your email.");
+      }
+      setStep("sent");
     } catch (err) {
       setError(err.message || "Failed to send link.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const completeSignIn = async () => {
-    setLoading(true);
-    setError("");
-    setStatus("");
-
-    if (bypassEnabled) {
-      if (code === bypassCode) {
-        onVerified();
-      } else {
-        setError("Invalid access code.");
-      }
-      setLoading(false);
-      return;
-    }
-
-    if (!email) {
-      setError("Please enter your email.");
-      setLoading(false);
-      return;
-    }
-
-    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!isValidEmail) {
-      setError("Please enter a valid email address.");
-      setLoading(false);
-      return;
-    }
-
-    if (!consent) {
-      setError("Please agree to share your email to continue.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      if (!isSignInWithEmailLink(auth, window.location.href)) {
-        throw new Error("Open the magic link from your email to continue.");
-      }
-      const credential = await signInWithEmailLink(
-        auth,
-        email,
-        window.location.href
-      );
-      const user = credential?.user;
-      if (user) {
-        const visitorRef = doc(db, "visitors", user.uid);
-        const existing = await getDoc(visitorRef);
-        if (existing.exists()) {
-          await updateDoc(visitorRef, {
-            lastSeen: serverTimestamp(),
-            email: user.email || email,
-          });
-        } else {
-          await setDoc(visitorRef, {
-            email: user.email || email,
-            createdAt: serverTimestamp(),
-            lastSeen: serverTimestamp(),
-            userAgent: navigator.userAgent,
-          });
-        }
-      }
-      window.localStorage.removeItem("otpEmail");
-      if (window.location.search) {
-        window.history.replaceState({}, document.title, window.location.pathname);
-      }
-      onVerified();
-    } catch (err) {
-      setError(err.message || "Failed to verify link.");
     } finally {
       setLoading(false);
     }
@@ -220,18 +128,6 @@ function OtpModal({ isOpen, onClose, onVerified }) {
             />
           </label>
 
-          {step === "code" && (
-            <label className="space-y-2 text-sm font-medium text-brand-light/70">
-              Access code
-              <input
-                className="w-full rounded-xl border border-brand-light/20 bg-brand-dark/70 px-4 py-3 text-sm text-brand-light outline-none transition placeholder:text-brand-light/40 focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/30"
-                placeholder="Enter code"
-                value={code}
-                onChange={(event) => setCode(event.target.value)}
-              />
-            </label>
-          )}
-
           {status && <p className="text-xs text-brand-accent">{status}</p>}
           {error && <p className="text-xs text-brand-accent">{error}</p>}
 
@@ -248,7 +144,7 @@ function OtpModal({ isOpen, onClose, onVerified }) {
           <div className="flex flex-wrap gap-3">
             {step === "email" ? (
               <button
-                className="rounded-xl border border-brand-accent/70 bg-brand-accent/15 px-5 py-3 text-sm font-semibold text-brand-accent transition hover:bg-brand-accent/25"
+                className="btn-primary rounded-xl px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5"
                 type="button"
                 onClick={sendLink}
                 disabled={loading}
@@ -257,17 +153,16 @@ function OtpModal({ isOpen, onClose, onVerified }) {
               </button>
             ) : (
               <button
-                className="rounded-xl border border-brand-accent/70 bg-brand-accent/15 px-5 py-3 text-sm font-semibold text-brand-accent transition hover:bg-brand-accent/25"
+                className="btn-primary rounded-xl px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5"
                 type="button"
-                onClick={completeSignIn}
-                disabled={loading}
+                onClick={onClose}
               >
-                {loading ? "Verifying..." : "Complete Sign-in"}
+                Close
               </button>
             )}
-            {step !== "email" && (
+            {step === "sent" && (
               <button
-                className="rounded-xl border border-brand-light/20 px-5 py-3 text-sm font-semibold text-brand-light/70 transition hover:text-brand-light"
+                className="btn-ghost rounded-xl px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5"
                 type="button"
                 onClick={() => setStep("email")}
                 disabled={loading}
