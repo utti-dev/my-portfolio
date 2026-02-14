@@ -33,12 +33,16 @@ const SKILLS = [
 
 function Skills() {
   return (
-    <main className="flex-1 space-y-8 pb-6">
+    <section className="space-y-8 pb-6" id="skills">
       <div className="space-y-4">
-        <h2 className="text-4xl font-semibold text-brand-dark sm:text-5xl">
+        <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-brand-light/50">
+          <span className="h-px w-10 bg-brand-accent" />
+          Skills
+        </div>
+        <h2 className="text-4xl font-semibold text-brand-light sm:text-5xl">
           Skills<span className="text-brand-accent">.</span>
         </h2>
-        <p className="max-w-2xl text-base leading-relaxed text-brand-dark/70 sm:text-lg">
+        <p className="max-w-2xl text-base leading-relaxed text-brand-light/70 sm:text-lg">
           A balanced toolkit that brings visual polish, accessible UX, and
           robust engineering to every project.
         </p>
@@ -49,15 +53,15 @@ function Skills() {
           {SKILLS.map((skill, index) => (
             <div
               key={skill.label}
-              className="group rounded-2xl border border-brand-dark/10 bg-brand-light p-6 shadow-[0_12px_24px_rgba(38,35,65,0.14)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_32px_rgba(38,35,65,0.2)] animate-fade-up motion-reduce:animate-none"
+              className="group rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-6 shadow-[0_12px_24px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_32px_rgba(0,0,0,0.45)] animate-fade-up motion-reduce:animate-none"
               style={{ animationDelay: `${index * 120}ms` }}
             >
-              <div className="flex items-center justify-between text-sm font-semibold text-brand-dark/80">
+              <div className="flex items-center justify-between text-sm font-semibold text-brand-light/80">
                 <span>{skill.label}</span>
                 <span className="text-brand-accent">{skill.value}%</span>
               </div>
-              <p className="mt-2 text-sm text-brand-dark/70">{skill.desc}</p>
-              <div className="mt-4 h-2 w-full rounded-full bg-brand-dark/10">
+              <p className="mt-2 text-sm text-brand-light/70">{skill.desc}</p>
+              <div className="mt-4 h-2 w-full rounded-full bg-brand-light/10">
                 <div
                   className="h-2 origin-left rounded-full bg-brand-accent animate-grow motion-reduce:animate-none"
                   style={{ width: `${skill.value}%` }}
@@ -67,10 +71,10 @@ function Skills() {
           ))}
         </div>
 
-        <div className="space-y-5 rounded-2xl border border-brand-dark/10 bg-brand-light p-6 shadow-[0_12px_24px_rgba(38,35,65,0.14)]">
+        <div className="space-y-5 rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-6 shadow-[0_12px_24px_rgba(0,0,0,0.35)]">
           <div>
-            <h3 className="text-lg font-semibold text-brand-dark">Toolbox</h3>
-            <p className="mt-2 text-sm text-brand-dark/70">
+            <h3 className="text-lg font-semibold text-brand-light">Toolbox</h3>
+            <p className="mt-2 text-sm text-brand-light/70">
               The tools and frameworks I use daily to deliver polished web
               experiences.
             </p>
@@ -88,19 +92,19 @@ function Skills() {
             ].map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-brand-dark/20 bg-brand-light px-4 py-2 text-xs font-semibold text-brand-dark/70 shadow-[0_6px_14px_rgba(38,35,65,0.12)] transition hover:-translate-y-0.5 hover:border-brand-accent/60 hover:text-brand-dark hover:shadow-[0_10px_18px_rgba(38,35,65,0.18)]"
+                className="rounded-full border border-brand-light/20 bg-brand-dark/60 px-4 py-2 text-xs font-semibold text-brand-light/70 shadow-[0_6px_14px_rgba(0,0,0,0.35)] transition hover:-translate-y-0.5 hover:border-brand-accent/60 hover:text-brand-light hover:shadow-[0_10px_18px_rgba(0,0,0,0.45)]"
               >
                 {tag}
               </span>
             ))}
           </div>
-          <div className="rounded-2xl bg-brand-accent/15 p-4 text-sm text-brand-dark">
+          <div className="rounded-2xl bg-brand-accent/15 p-4 text-sm text-brand-light">
             Currently exploring WebGL and advanced interactions for immersive
             product storytelling.
           </div>
         </div>
       </div>
-    </main>
+    </section>
   );
 }
 

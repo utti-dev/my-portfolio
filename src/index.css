@@ -6,6 +6,10 @@ body {
   @apply min-h-screen bg-brand-dark text-brand-light font-sans;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .globe-alt {
   position: relative;
   width: min(320px, 90vw);

@@ -1,100 +1,105 @@
 const EXPERIENCE = [
   {
-    company: "Apple",
-    role: "Engineer",
-    period: "May 2018 - Present",
+    company: "FindLaw",
+    role: "Web Developer",
+    technologies: ["HTML", "CSS", "Bootstrap", "WordPress", "Web API", "JSON"],
     highlights: [
-      "Developed and shipped highly interactive web applications for Apple Music using Ember.js.",
-      "Built and shipped the Apple Music Extension within Facebook Messenger leveraging third-party and internal APIs.",
-      "Contributed extensively to MusicKit.js, a JavaScript framework that allows developers to add an Apple Music player to their web apps.",
+      "Designed and developed responsive attorney websites with mobile-first layouts and cross-browser compatibility.",
+      "Maintained and enhanced existing sites, improving UI/UX and resolving production issues.",
+      "Optimized performance via refactoring, image optimization, and caching to improve SEO and load times.",
+      "Collaborated with attorneys, business teams, and PMs to deliver tailored web solutions.",
     ],
   },
   {
-    company: "Microsoft",
-    role: "Frontend Developer",
-    period: "Jan 2016 - Apr 2018",
+    company: "Quest Global",
+    role: "Sr. Software Engineer",
+    technologies: ["React", "Redux", "JavaScript (ES6+)", "REST APIs"],
     highlights: [
-      "Led UI rebuilds for customer dashboards with React and TypeScript.",
-      "Introduced shared UI libraries to reduce design debt and speed delivery.",
+      "Built a data-driven dashboard with modular, reusable UI components for charts and metrics.",
+      "Integrated multiple REST APIs with proper loading and error handling for dynamic insights.",
+      "Optimized state updates for large, frequently updated datasets.",
+      "Wrote Jest unit tests to validate core UI logic and stability.",
     ],
   },
   {
-    company: "Spotify",
-    role: "Product Designer",
-    period: "Aug 2014 - Dec 2015",
+    company: "NICE",
+    role: "Senior Front-End Developer / Team Lead",
+    technologies: ["React", "Next.js", "TypeScript", "Redux", "Jest", "Karma", "TDD"],
     highlights: [
-      "Partnered with engineering to ship responsive landing pages and tours.",
-      "Ran design sprints focused on onboarding and retention.",
+      "Led architecture and code reviews, mentoring engineers on quality and best practices.",
+      "Improved Core Web Vitals by 25+ points via rendering optimizations and efficient state management.",
+      "Implemented SSR/CSR strategies, dynamic imports, and code splitting to boost LCP and TTI.",
+      "Used Lighthouse and React Profiler to eliminate performance bottlenecks.",
+    ],
+  },
+  {
+    company: "NICE",
+    role: "Senior Front-End Developer (MAX)",
+    technologies: ["React", "Redux Toolkit", "JavaScript", "TDD", "Playwright"],
+    highlights: [
+      "Migrated legacy JavaScript UI to React for scalability and performance.",
+      "Built a reusable component library to standardize UI across products.",
+      "Led performance tuning with Lighthouse and React Profiler.",
     ],
   },
 ];
 
 function Experience() {
   return (
-    <main className="flex-1 space-y-8 pb-6">
+    <section className="space-y-8 pb-6" id="experience">
       <div className="space-y-4">
-        <h2 className="text-4xl font-semibold text-brand-dark sm:text-5xl">
-          Experience<span className="text-brand-accent">.</span>
+        <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-brand-light/50">
+          <span className="h-px w-10 bg-brand-accent" />
+          Work Experience
+        </div>
+        <h2 className="text-4xl font-semibold text-brand-light sm:text-5xl">
+          Work Experience<span className="text-brand-accent">.</span>
         </h2>
-        <p className="max-w-2xl text-base leading-relaxed text-brand-dark/70 sm:text-lg">
-          A timeline of the teams, products, and impacts that shaped my craft
-          as a frontend developer.
+        <p className="max-w-2xl text-base leading-relaxed text-brand-light/70 sm:text-lg">
+          Roles, impact, and contributions across enterprise platforms and
+          customer-facing products.
         </p>
       </div>
 
-      <div className="relative">
-        <div className="absolute left-5 top-3 hidden h-full w-px bg-brand-dark/20 sm:block" />
-        <div className="space-y-6">
-          {EXPERIENCE.map((item, index) => (
-            <article
-              key={item.company}
-              className="group relative animate-fade-up sm:pl-14 motion-reduce:animate-none"
-              style={{ animationDelay: `${index * 120}ms` }}
-            >
-              <span className="absolute left-2 top-7 hidden h-6 w-6 items-center justify-center rounded-full border border-brand-accent/40 bg-brand-light text-brand-accent shadow-[0_6px_14px_rgba(38,35,65,0.12)] sm:flex">
-                <span className="h-2 w-2 rounded-full bg-brand-accent" />
-              </span>
-              <div className="rounded-2xl border border-brand-dark/10 bg-brand-light p-6 shadow-[0_12px_24px_rgba(38,35,65,0.14)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_18px_32px_rgba(38,35,65,0.2)]">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex flex-wrap items-baseline gap-2">
-                    <h3 className="text-lg font-semibold text-brand-dark">
-                      {item.role}
-                    </h3>
-                    <span className="text-sm text-brand-dark/50">@</span>
-                    <span className="text-lg font-semibold text-brand-accent">
-                      {item.company}
-                    </span>
-                  </div>
-                  <span className="rounded-full bg-brand-accent/15 px-3 py-1 text-xs font-semibold text-brand-dark">
-                    {item.period}
-                  </span>
-                </div>
-
-                <ul className="mt-4 space-y-3 text-sm text-brand-dark/70">
-                  {item.highlights.map((highlight) => (
-                    <li key={highlight} className="flex gap-3">
-                      <span className="mt-1 flex h-5 w-5 items-center justify-center rounded-full border border-brand-accent/40 bg-brand-accent/15 text-brand-dark">
-                        <svg
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          className="h-3 w-3"
-                          aria-hidden="true"
-                        >
-                          <path d="M5 10l3 3 7-7" />
-                        </svg>
-                      </span>
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
+      <div className="space-y-6">
+        {EXPERIENCE.map((item, index) => (
+          <article
+            key={`${item.company}-${item.role}`}
+            className="group rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-6 shadow-[0_12px_24px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_32px_rgba(0,0,0,0.45)] animate-fade-up motion-reduce:animate-none"
+            style={{ animationDelay: `${index * 120}ms` }}
+          >
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-light/50">
+                  {item.company}
+                </p>
+                <h3 className="mt-2 text-xl font-semibold text-brand-light">
+                  {item.role}
+                </h3>
               </div>
-            </article>
-          ))}
-        </div>
+              <div className="flex flex-wrap gap-2">
+                {item.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-full border border-brand-light/15 bg-brand-dark/60 px-3 py-1 text-xs font-semibold text-brand-light/70"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <ul className="mt-4 space-y-3 text-sm text-brand-light/70">
+              {item.highlights.map((highlight) => (
+                <li key={highlight} className="flex gap-3">
+                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-brand-accent" />
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
       </div>
-    </main>
+    </section>
   );
 }
 
