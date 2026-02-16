@@ -1,28 +1,17 @@
 import { useEffect, useState } from "react";
-import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
-import {
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
-import Experience from "./pages/Experience.jsx";
+import Services from "./pages/Services.jsx";
 import Projects from "./pages/Projects.jsx";
-import Skills from "./pages/Skills.jsx";
 import Contact from "./pages/Contact.jsx";
-import OtpModal from "./components/OtpModal.jsx";
-import { auth, db } from "./lib/firebase";
+import Authority from "./pages/Authority.jsx";
 import LogoMark from "./components/LogoMark.jsx";
+import CtaBlock from "./components/CtaBlock.jsx";
 
 function Layout() {
   const [activeSection, setActiveSection] = useState("home");
-  const [isUnlocked, setIsUnlocked] = useState(false);
-  const [isOtpOpen, setIsOtpOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
   const [themeMode, setThemeMode] = useState(() => {
     if (typeof window === "undefined") {
       return "auto";
@@ -44,16 +33,12 @@ function Layout() {
 
   const resolvedTheme = themeMode === "auto" ? autoTheme : themeMode;
 
-  const showToast = (message) => {
-    setToastMessage(message);
-  };
-
   useEffect(() => {
     const sectionIds = [
       "home",
+      "services",
       "projects",
-      "experience",
-      "skills",
+      "authority",
       "about",
       "contact",
     ];
@@ -86,6 +71,16 @@ function Layout() {
   }, []);
 
   useEffect(() => {
+    const threshold = 120;
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > threshold);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
     if (!isMobileMenuOpen) {
       return;
     }
@@ -97,82 +92,6 @@ function Layout() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem("portfolioUnlocked");
-    if (stored === "true") {
-      setIsUnlocked(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-    const hasEmailLink = isSignInWithEmailLink(auth, window.location.href);
-    if (!hasEmailLink) {
-      return;
-    }
-    const storedEmail = window.localStorage.getItem("otpEmail");
-    const storedConsent = window.localStorage.getItem("otpConsent") === "true";
-    if (!storedEmail || !storedConsent) {
-      setIsOtpOpen(true);
-      return;
-    }
-    const complete = async () => {
-      try {
-        const credential = await signInWithEmailLink(
-          auth,
-          storedEmail,
-          window.location.href
-        );
-        const user = credential?.user;
-        if (user) {
-          const visitorRef = doc(db, "visitors", user.uid);
-          const existing = await getDoc(visitorRef);
-          if (existing.exists()) {
-            await updateDoc(visitorRef, {
-              lastSeen: serverTimestamp(),
-              email: user.email || storedEmail,
-            });
-          } else {
-            await setDoc(visitorRef, {
-              email: user.email || storedEmail,
-              createdAt: serverTimestamp(),
-              lastSeen: serverTimestamp(),
-              userAgent: navigator.userAgent,
-            });
-          }
-        }
-        window.localStorage.removeItem("otpEmail");
-        window.localStorage.removeItem("otpConsent");
-        if (window.location.search) {
-          window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname
-          );
-        }
-        setIsUnlocked(true);
-        setIsOtpOpen(false);
-        window.localStorage.setItem("portfolioUnlocked", "true");
-        showToast("Access verified. Full portfolio unlocked.");
-      } catch (error) {
-        setIsOtpOpen(true);
-      }
-    };
-    void complete();
-  }, []);
-
-  useEffect(() => {
-    if (!toastMessage) {
-      return undefined;
-    }
-    const timer = window.setTimeout(() => {
-      setToastMessage("");
-    }, 3200);
-    return () => window.clearTimeout(timer);
-  }, [toastMessage]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -250,12 +169,6 @@ function Layout() {
     };
   }, [themeMode]);
 
-  const handleUnlock = () => {
-    setIsUnlocked(true);
-    setIsOtpOpen(false);
-    window.localStorage.setItem("portfolioUnlocked", "true");
-  };
-
   const toggleTheme = () => {
     setThemeMode((prevMode) => {
       if (prevMode === "auto") {
@@ -271,7 +184,13 @@ function Layout() {
   return (
     <div className="min-h-screen bg-brand-dark text-brand-light">
       <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-16 px-6 py-8 sm:px-10 lg:px-14">
-        <header className="flex items-center justify-between">
+        <header
+          className={
+            isSticky
+              ? "sticky top-0 z-40 -mx-6 flex items-center justify-between border-b border-brand-light/10 bg-brand-dark/90 px-6 py-4 backdrop-blur sm:-mx-10 sm:px-10 lg:-mx-14 lg:px-14"
+              : "flex items-center justify-between py-2"
+          }
+        >
           <a className="flex items-center text-brand-accent" href="#home" aria-label="Home">
             <LogoMark className="h-9 w-9 sm:h-10 sm:w-10" />
           </a>
@@ -288,33 +207,33 @@ function Layout() {
             </a>
             <a
               className={
+                activeSection === "services"
+                  ? "text-brand-accent"
+                  : "text-brand-light/70 transition hover:text-brand-light"
+              }
+              href="#services"
+            >
+              Services
+            </a>
+            <a
+              className={
                 activeSection === "projects"
                   ? "text-brand-accent"
                   : "text-brand-light/70 transition hover:text-brand-light"
               }
               href="#projects"
             >
-              Projects
+              Case Studies
             </a>
             <a
               className={
-                activeSection === "experience"
+                activeSection === "authority"
                   ? "text-brand-accent"
                   : "text-brand-light/70 transition hover:text-brand-light"
               }
-              href="#experience"
+              href="#authority"
             >
-              Experience
-            </a>
-            <a
-              className={
-                activeSection === "skills"
-                  ? "text-brand-accent"
-                  : "text-brand-light/70 transition hover:text-brand-light"
-              }
-              href="#skills"
-            >
-              Skills
+              Why Me
             </a>
             <a
               className={
@@ -324,7 +243,7 @@ function Layout() {
               }
               href="#about"
             >
-              About
+              How I Think
             </a>
             <a
               className={
@@ -393,10 +312,10 @@ function Layout() {
             <div className="card-surface space-y-2 p-4 text-sm font-semibold text-brand-light">
               {[
                 { id: "home", label: "Home" },
-                { id: "projects", label: "Projects" },
-                { id: "experience", label: "Experience" },
-                { id: "skills", label: "Skills" },
-                { id: "about", label: "About" },
+                { id: "services", label: "Services" },
+                { id: "projects", label: "Case Studies" },
+                { id: "authority", label: "Why Me" },
+                { id: "about", label: "How I Think" },
                 { id: "contact", label: "Contact" },
               ].map((item) => (
                 <a
@@ -418,45 +337,25 @@ function Layout() {
 
         <main className="flex flex-col gap-16">
           <Home />
+          <CtaBlock
+            eyebrow="Ready to build?"
+            title="Let’s turn your product vision into a fast, premium React experience."
+            description="I help teams ship conversion-focused frontends with clear timelines and measurable impact."
+            primary={{ href: "#contact", label: "Start Your Project" }}
+            secondary={{ href: "#projects", label: "View Case Studies" }}
+          />
+          <Services />
+          <CtaBlock
+            eyebrow="Looking for a senior React freelancer?"
+            title="Get a high-performing frontend without hiring a full team."
+            description="Architecture, UX, and performance optimization delivered with senior-level ownership."
+            primary={{ href: "#contact", label: "Book a Free 30-min Consultation" }}
+            secondary={{ href: "#services", label: "Explore Services" }}
+          />
           <Projects />
-
-          <div className="relative">
-            <div
-              className={
-                isUnlocked
-                  ? "space-y-16"
-                  : "space-y-16 opacity-40 blur-sm pointer-events-none"
-              }
-            >
-              <Experience />
-              <Skills />
-              <About />
-              <Contact />
-            </div>
-
-            {!isUnlocked && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="rounded-2xl border border-brand-light/10 bg-brand-dark/90 p-6 text-center shadow-[0_18px_36px_rgba(0,0,0,0.5)]">
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-light/50">
-                    Locked Content
-                  </p>
-                  <h3 className="mt-2 text-xl font-semibold text-brand-light">
-                    Verify to unlock full portfolio
-                  </h3>
-                  <p className="mt-2 text-sm text-brand-light/70">
-                    Enter your email to receive a magic link.
-                  </p>
-                  <button
-                    className="mt-4 rounded-xl border border-brand-accent/70 bg-brand-accent/15 px-5 py-3 text-sm font-semibold text-brand-accent transition hover:bg-brand-accent/25"
-                    type="button"
-                    onClick={() => setIsOtpOpen(true)}
-                  >
-                    Unlock Now
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
+          <Authority />
+          <About />
+          <Contact />
         </main>
 
         <footer className="mt-12 border-t border-brand-light/10 pt-6 text-xs text-brand-light/60">
@@ -477,18 +376,6 @@ function Layout() {
         </footer>
       </div>
 
-      <OtpModal
-        isOpen={isOtpOpen}
-        onClose={() => setIsOtpOpen(false)}
-        onVerified={handleUnlock}
-        onToast={showToast}
-      />
-
-      {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 rounded-xl border border-brand-light/15 bg-brand-dark/90 px-4 py-3 text-sm text-brand-light shadow-[0_12px_24px_rgba(0,0,0,0.4)]">
-          {toastMessage}
-        </div>
-      )}
     </div>
   );
 }

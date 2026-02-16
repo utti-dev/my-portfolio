@@ -7,6 +7,7 @@
   --color-brand-dark: 38 35 65;
   --color-brand-accent: 249 217 74;
   --color-brand-light: 231 245 245;
+  --sticky-header-offset: 65px;
 }
 
 .theme-light {
@@ -16,71 +17,120 @@
   --color-brand-light: 28 26 38;
 }
 
+@layer base {
+  h1,
+  h2,
+  h3 {
+    @apply font-heading;
+  }
+}
+
 .btn-primary,
 .btn-secondary,
 .btn-ghost {
   border-radius: 9999px;
-  border: 1px solid rgba(var(--color-brand-accent), 0.7);
-  background-color: rgba(var(--color-brand-accent), 0.12);
+  border: 2px solid rgba(var(--color-brand-accent), 0.85);
+  background-color: rgba(var(--color-brand-dark), 0.85);
+  color: rgb(var(--color-brand-light));
+  transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-primary {
+  background-color: rgba(var(--color-brand-accent), 0.18);
   color: rgb(var(--color-brand-accent));
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s ease, background-color 0.2s ease,
-    color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:
+    0 0 0 1px rgba(var(--color-brand-accent), 0.4),
+    inset 0 0 12px rgba(var(--color-brand-accent), 0.12);
+}
+
+.btn-secondary {
+  background-color: rgba(var(--color-brand-dark), 0.7);
+  color: rgb(var(--color-brand-light));
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: rgb(var(--color-brand-light));
+  border-color: rgba(var(--color-brand-accent), 0.6);
 }
 
 .btn-primary:hover,
 .btn-secondary:hover,
 .btn-ghost:hover {
-  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.45);
-  background-color: rgba(var(--color-brand-accent), 0.2);
+  box-shadow:
+    0 0 0 2px rgba(var(--color-brand-accent), 0.7),
+    0 12px 24px rgba(var(--color-brand-dark), 0.35);
+  transform: translateY(-1px);
 }
 
 .card-surface {
-  border-radius: 28px;
-  border: 1px solid rgba(var(--color-brand-light), 0.1);
-  background-color: rgba(var(--color-brand-dark), 0.7);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+  border-radius: 16px;
+  border: 2px solid rgba(var(--color-brand-accent), 0.8);
+  background-color: rgba(var(--color-brand-dark), 0.35);
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    border-color 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 0 0 1px rgba(var(--color-brand-accent), 0.2);
+}
+
+.card-surface:hover,
+.card-surface:focus-within {
+  box-shadow:
+    0 0 0 2px rgba(var(--color-brand-accent), 0.5),
+    0 14px 28px rgba(var(--color-brand-dark), 0.35);
+  transform: translateY(-2px);
 }
 
 .theme-light .btn-primary,
 .theme-light .btn-secondary,
 .theme-light .btn-ghost {
-  border: 1px solid rgb(var(--color-brand-accent));
-  background-color: rgb(var(--color-brand-accent));
+  border: 2px solid rgba(var(--color-brand-accent), 0.85);
+  background-color: rgba(var(--color-brand-dark), 0.85);
   color: rgb(var(--color-brand-light));
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 24px rgba(var(--color-brand-dark), 0.16);
+}
+
+.theme-light .btn-primary {
+  background-color: rgba(var(--color-brand-accent), 0.2);
+  color: rgb(var(--color-brand-light));
+}
+
+.theme-light .btn-secondary {
+  background-color: rgba(var(--color-brand-dark), 0.9);
+  color: rgb(var(--color-brand-light));
+}
+
+.theme-light .btn-ghost {
+  background-color: transparent;
+  color: rgb(var(--color-brand-light));
 }
 
 .theme-light .btn-primary:hover,
 .theme-light .btn-secondary:hover,
 .theme-light .btn-ghost:hover {
-  background-color: rgba(var(--color-brand-accent), 0.9);
-  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.24);
+  box-shadow:
+    0 0 0 1px rgba(var(--color-brand-accent), 0.35),
+    0 12px 24px rgba(var(--color-brand-dark), 0.2);
 }
 
 .theme-light .card-surface {
-  border: 1px solid rgba(var(--color-brand-accent), 0.35);
-  background-color: rgba(var(--color-brand-accent), 0.12);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+  border: 2px solid rgba(var(--color-brand-accent), 0.85);
+  background-color: rgba(var(--color-brand-dark), 0.75);
+  box-shadow: 0 0 0 1px rgba(var(--color-brand-accent), 0.25);
 }
 
 body {
   @apply min-h-screen bg-brand-dark text-brand-light font-sans transition-colors duration-300;
 }
 
-.role-word {
-  display: inline-block;
-  transition: opacity 220ms ease, transform 220ms ease;
-  will-change: opacity, transform;
-}
-
-.role-word--hidden {
-  opacity: 0;
-  transform: translateY(8px);
-}
-
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--sticky-header-offset);
+}
+
+section {
+  scroll-margin-top: var(--sticky-header-offset);
 }
 
 .globe-alt {

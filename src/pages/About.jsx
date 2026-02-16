@@ -1,84 +1,81 @@
+const THINKING_POINTS = [
+  {
+    title: "Growth mindset",
+    detail:
+      "Every release is a learning loop. I iterate fast, validate assumptions, and compound results.",
+  },
+  {
+    title: "Problem-solving first",
+    detail:
+      "I start with the user and business goals, then map the UI to measurable outcomes.",
+  },
+  {
+    title: "Engineering discipline",
+    detail:
+      "Clean architecture, predictable state, and performance budgets keep teams shipping.",
+  },
+  {
+    title: "Continuous improvement",
+    detail:
+      "I track Core Web Vitals, accessibility, and UX feedback to drive long-term quality.",
+  },
+];
+
 function About() {
   return (
     <section className="space-y-8 pb-6" id="about">
       <div className="space-y-4">
         <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-brand-light/50">
           <span className="h-px w-10 bg-brand-accent" />
-          About
+          How I Think
         </div>
         <h2 className="text-4xl font-semibold text-brand-light sm:text-5xl">
-          About me<span className="text-brand-accent">.</span>
+          How I think as a developer<span className="text-brand-accent">.</span>
         </h2>
         <div className="flex max-w-2xl gap-3 text-brand-light/70">
           <span className="mt-1 h-6 w-1 rounded-full bg-brand-accent" />
           <p className="text-base leading-relaxed sm:text-lg">
-            Developing beautiful and functional websites is what I love doing,
-            and that's why I give my all in every new challenge.
+            I combine product thinking with engineering discipline to build
+            interfaces that are fast, accessible, and trusted by users.
           </p>
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-brand-light">My Stack.</h3>
-          <div className="rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-4 shadow-[0_12px_24px_rgba(0,0,0,0.35)]">
-            <div className="flex flex-wrap gap-2">
-              {[
-                "Web Design",
-                "UI/UX Expertise",
-                "HTML/CSS",
-                "Team Player",
-                "JavaScript Proficiency",
-                "React",
-                "Problem Solving",
-                "Trends Research",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="inline-flex items-center gap-2 rounded-full border border-brand-light/10 bg-brand-dark/80 px-3 py-1 text-xs font-semibold text-brand-light/80 shadow-[0_6px_14px_rgba(0,0,0,0.35)]"
-                >
-                  <span className="h-2 w-2 rounded-full bg-brand-accent" />
-                  {item}
-                </span>
-              ))}
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+        <div className="grid gap-4 sm:grid-cols-2">
+          {THINKING_POINTS.map((item) => (
+            <div key={item.title} className="card-surface p-5">
+              <p className="text-sm font-semibold text-brand-light">
+                {item.title}
+              </p>
+              <p className="mt-2 text-sm text-brand-light/70">{item.detail}</p>
             </div>
-          </div>
+          ))}
         </div>
 
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-brand-light">
-            My Special Place.
+            Working style.
           </h3>
-          <div className="rounded-2xl border border-brand-light/10 bg-brand-dark/70 p-4 shadow-[0_12px_24px_rgba(0,0,0,0.35)]">
-            <div
-              className="globe-alt"
-              role="img"
-              aria-label="World map pointing to Hyderabad"
-              style={{ "--lat": "17.4065", "--lon": "78.4772" }}
-            >
-              <div className="globe-alt__sphere">
-                <div className="globe-alt__spin">
-                  <div className="globe-alt__map">
-                    <div className="globe-alt__marker">
-                      <span />
-                    </div>
-                  </div>
-                  <div className="globe-alt__grid" />
-                </div>
-                <div className="globe-alt__glow" />
-              </div>
-              <div className="globe-alt__halo animate-drift motion-reduce:animate-none" />
+          <div className="card-surface space-y-4 p-5 text-sm text-brand-light/70">
+            <div className="inline-flex items-center gap-2 rounded-full border border-brand-accent/30 px-3 py-2 text-xs font-semibold text-brand-accent">
+              📍 Based in India — Available Globally
             </div>
-            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-brand-accent/40 bg-brand-accent/15 px-3 py-1 text-xs font-semibold text-brand-light">
-              Hyderabad, India
-            </div>
+            <p>
+              I collaborate with teams across the US, Europe, and APAC, adapting
+              to overlapping hours for fast feedback loops.
+            </p>
+            <p className="text-xs uppercase tracking-[0.2em] text-brand-light/60">
+              IST (UTC +5:30) — Overlap friendly
+            </p>
           </div>
         </div>
       </div>
-
     </section>
   );
 }
 
 export default About;
+
+
 

@@ -1,33 +1,33 @@
 const SKILLS = [
   {
-    label: "UI/UX Design",
-    value: 92,
-    desc: "Designing clean, intuitive interfaces.",
-  },
-  {
-    label: "Frontend Development",
+    label: "React Architecture",
     value: 95,
-    desc: "Building responsive, production-ready UI.",
+    desc: "Scalable component systems and predictable state.",
   },
   {
-    label: "Design Systems",
-    value: 88,
-    desc: "Scalable components and tokens.",
+    label: "UI/UX Execution",
+    value: 92,
+    desc: "Clear layouts, strong hierarchy, and polished interactions.",
+  },
+  {
+    label: "Performance Optimization",
+    value: 90,
+    desc: "Core Web Vitals, fast loading, and smooth UI.",
   },
   {
     label: "Accessibility",
-    value: 90,
-    desc: "Inclusive, standards-based UX.",
+    value: 88,
+    desc: "WCAG-aligned UX and keyboard-friendly flows.",
   },
   {
-    label: "Motion & Interaction",
-    value: 85,
-    desc: "Micro-interactions and smooth motion.",
-  },
-  {
-    label: "Performance",
+    label: "Responsive Delivery",
     value: 89,
-    desc: "Fast, optimized experiences.",
+    desc: "Mobile-first execution across devices and breakpoints.",
+  },
+  {
+    label: "API + State Management",
+    value: 87,
+    desc: "Reliable data flows with Redux and modern patterns.",
   },
 ];
 
@@ -37,14 +37,14 @@ function Skills() {
       <div className="space-y-4">
         <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-brand-light/50">
           <span className="h-px w-10 bg-brand-accent" />
-          Skills
+          Expertise
         </div>
         <h2 className="text-4xl font-semibold text-brand-light sm:text-5xl">
-          Skills<span className="text-brand-accent">.</span>
+          Expertise<span className="text-brand-accent">.</span>
         </h2>
         <p className="max-w-2xl text-base leading-relaxed text-brand-light/70 sm:text-lg">
-          A balanced toolkit that brings visual polish, accessible UX, and
-          robust engineering to every project.
+          A senior-level toolkit focused on shipping reliable, conversion-ready
+          frontend experiences.
         </p>
       </div>
 

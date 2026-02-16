@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 
 const LOCATION_LABEL = "Hyderabad, India";
-const STATUS_LABEL = "Open to Frontend Opportunities";
+const STATUS_LABEL = "Open for Freelance React Projects";
 const IST_LABEL = "IST (UTC+5:30)";
 
 function LiveLocationCard() {

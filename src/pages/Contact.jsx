@@ -7,11 +7,11 @@ function Contact() {
           Contact
         </div>
         <h2 className="text-4xl font-semibold text-brand-light sm:text-5xl">
-          Contact Me<span className="text-brand-accent">.</span>
+          Start your project<span className="text-brand-accent">.</span>
         </h2>
         <p className="max-w-2xl text-base leading-relaxed text-brand-light/70 sm:text-lg">
-          Let's build something memorable together. Share a quick note and I'll
-          get back to you within 24-48 hours.
+          Tell me about your product goals and timelines. I reply within 24
+          hours with next steps and a clear project plan.
         </p>
       </div>
 
@@ -35,19 +35,50 @@ function Contact() {
               />
             </label>
           </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="space-y-2 text-sm font-medium text-brand-light/70">
+              Project type
+              <select className="w-full rounded-xl border border-brand-light/20 bg-brand-dark/70 px-4 py-3 text-sm text-brand-light outline-none transition focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/30">
+                <option>New product</option>
+                <option>Frontend rebuild</option>
+                <option>Performance optimization</option>
+                <option>UI/UX improvements</option>
+              </select>
+            </label>
+            <label className="space-y-2 text-sm font-medium text-brand-light/70">
+              Timeline
+              <select className="w-full rounded-xl border border-brand-light/20 bg-brand-dark/70 px-4 py-3 text-sm text-brand-light outline-none transition focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/30">
+                <option>2-4 weeks</option>
+                <option>1-2 months</option>
+                <option>2-3 months</option>
+                <option>Flexible</option>
+              </select>
+            </label>
+          </div>
           <label className="space-y-2 text-sm font-medium text-brand-light/70">
             Project details
             <textarea
               className="min-h-[140px] w-full rounded-xl border border-brand-light/20 bg-brand-dark/70 px-4 py-3 text-sm text-brand-light outline-none transition placeholder:text-brand-light/50 focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/30"
-              placeholder="Tell me about your project goals..."
+              placeholder="Share goals, scope, and current challenges..."
             />
           </label>
-          <button
-            className="btn-primary w-full rounded-xl px-5 py-3 text-sm font-semibold shadow-[0_14px_28px_rgba(0,0,0,0.4)] transition hover:-translate-y-0.5 sm:w-auto"
-            type="submit"
-          >
-            Send Message
-          </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              className="btn-primary w-full rounded-xl px-5 py-3 text-sm font-semibold shadow-[0_14px_28px_rgba(0,0,0,0.4)] transition hover:-translate-y-0.5 sm:w-auto"
+              type="submit"
+            >
+              Send Project Details
+            </button>
+            <a
+              className="btn-secondary w-full rounded-xl px-5 py-3 text-sm font-semibold shadow-[0_12px_24px_rgba(0,0,0,0.35)] transition hover:-translate-y-0.5 sm:w-auto"
+              href="mailto:uttiramesh53@gmail.com?subject=Free%2030-min%20Consultation"
+            >
+              Book a Free 30-min Consultation
+            </a>
+          </div>
+          <p className="text-xs text-brand-light/60">
+            Response time: within 24 hours on business days.
+          </p>
         </form>
 
         <div className="space-y-4">
@@ -69,7 +100,7 @@ function Contact() {
             </div>
           ))}
           <div className="card-surface p-6 text-sm text-brand-light">
-            Available for new freelance projects starting next month.
+            Currently accepting freelance projects for the next 2–3 weeks.
           </div>
         </div>
       </div>

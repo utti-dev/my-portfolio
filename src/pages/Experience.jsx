@@ -50,14 +50,15 @@ function Experience() {
       <div className="space-y-4">
         <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-brand-light/50">
           <span className="h-px w-10 bg-brand-accent" />
-          Work Experience
+          Experience
         </div>
         <h2 className="text-4xl font-semibold text-brand-light sm:text-5xl">
-          Work Experience<span className="text-brand-accent">.</span>
+          Proven delivery across enterprise and startup teams
+          <span className="text-brand-accent">.</span>
         </h2>
         <p className="max-w-2xl text-base leading-relaxed text-brand-light/70 sm:text-lg">
-          Roles, impact, and contributions across enterprise platforms and
-          customer-facing products.
+          Senior frontend leadership, performance optimization, and scalable UI
+          systems built across SaaS, analytics, and customer platforms.
         </p>
       </div>
 
