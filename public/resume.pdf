@@ -1,0 +1,201 @@
+Here is the OCR for the first page of the resume PDF.
+
+- Context: This is the first page of a resume for Utti Ramesh, a Senior Frontend Developer. It includes contact information, a brief summary, professional experience, achievements, and technical skills.
+- Text: Utti Ramesh
+Senior Frontend Developer
+in https://linkedin.com/in/utti-ramesh-13912320a
+uttiramesh53@gmail.com
++918985336750
+Hyderabad
+
+About Me
+Experienced Senior Front-End Engineer with 7+ years' expertise in web interface development. Seeking to lead innovative projects and collaborate within
+dynamic teams to drive impactful solutions.
+
+Professional Experience
+THOMSON
+REUTERS
+Quest
+NICE
+Thomson Reuters
+Oct 2017 - Aug 2021
+Quest Global
+Aug 2021 Jun 2022
+NICE
+Jul 2022 Jul 2025
+Freelancing
+Nov 2025 - Present
+
+Achievements
+Surge & Shine award @ TR
+• CSAT Award @NICE
+Sparkathon Winner @NICE
+
+Technical Skills
+Frontend
+•
+•
+•
+•
+•
+•
+React.js, Next.js (SSR & SSG)
+Micro-Frontend Architecture,
+Module Federation
+Redux Toolkit, Zustand
+Client & Server State Management
+JavaScript (ES6+), TypeScript
+HTML5, CSS3, TailwindCSS
+
+Backend & Database
+•
+REST APIs Integration
+SQL (Postgres), JSON data handling
+
+Cloud & DevOps
+•
+AWS (S3, CloudFront,
+CloudWatch, Route53, Lambda)
+•
+CI/CD Pipelines
+Docker (Basic)
+•
+Performance Monitoring & Logging
+
+Testing
+•
+Jest, Playwright, Cypress
+•
+TDD
+
+Al & Modern Tools
+•
+Al-powered UI integrations
+•
+Familiarity with Al-assisted
+development tools
+Experience
+Findlaw (Thomson Reuters)
+Technologies: HTML, CSS, Web API, JSON, Bootstrap, WordPress
+Tools: Sublime Text, WordPress CMS, and browser developer tools.
+Role: Web Developer
+Key Responsibilities:
+• Designed and developed responsive websites for FindLaw attorneys, ensuring cross-browser
+compatibility and mobile-first layouts to improve accessibility and client engagement.
+• Maintained and enhanced existing websites, including troubleshooting issues, updating content,
+and implementing UI/UX improvements to boost overall site performance.
+• Optimized website performance through code refactoring, image optimization, and caching
+strategies, resulting in faster load times and improved SEO rankings.
+• Collaborated with stakeholders (attorneys, business teams, and project managers) to gather
+requirements, clarify customer needs, and deliver tailored web solutions.
+• Worked with APIs and JSON for dynamic content integration, improving interactivity and data
+handling across client websites. Leveraged Bootstrap, WordPress, HTML, and CSS to build and
+customize website templates, ensuring consistency with branding and usability standards.
+
+Al Enhanced Metrics Dashboard- POC (Quest Global)
+Technologies: React, JavaScript (ES6+), HTML, CSS, REST APIS
+Tools: Visual Studio Code, Git, JIRA, Postman
+Role: Sr. Software Engineer - responsible for developing data-driven dashboards and interactive UI
+components for enterprise users.
+Key Contributions:
+• Developed and maintained a web-based enterprise dashboard application using React and Redux,
+enabling real-time data visualization and operational insights.
+• Implemented modular and reusable UI components to display complex datasets such as charts,
+tables, and summary metrics.
+• Integrated multiple REST APIs to fetch, transform, and present backend data with proper loading
+states and error handling.
+• Optimized component rendering and state updates to ensure smooth performance when handling
+large and frequently updated datasets.
+• Collaborated closely with backend teams and stakeholders to understand business requirements
+and translate them into scalable front-end solutions.
+• Followed best coding standards and UI consistency guidelines, improving maintainability and
+reducing future enhancement effort.
+• Wrote unit test cases using Jest to validate core UI logic and ensure stability across releases.
+• Participated actively in Agile ceremonies, including sprint planning, daily stand-ups, reviews, and
+defect tracking via JIRA.
+
+CXOne Agent Performance (NICE)
+• Technologies: React, Nextjs Redux, ES6, Typescript, HTML, CSS, Jest, Karma, TDD
+•
+Tools: Visual Studio Code, GitHub, AWS, Figma, JIRA, Lighthouse, React Profiler
+Backend/Scripting Exposure: Python (basic / integration-level)
+Role: Senior Front-End Developer / Team Lead - responsible for architecture design, code reviews,
+mentoring, and delivering high-performance, maintainable UI solutions.
+Key Contributions:
+• Architected Micro-Frontend solutions using Module Federation, enabling independent deployments
+and improved scalability.
+• Contributed 2+ years of hands-on experience with Next.js, including:
+Page-based routing and layout structuring
+Server-side rendering (SSR) and client-side rendering (CSR) trade-offs
+Performance optimizations using dynamic imports and lazy loading
+• Boosted Core Web Vitals by 25+ points through rendering optimizations, efficient state management,
+and performance-focused refactoring.
+• Implemented lazy loading and code splitting with React's dynamic imports and Suspense, reducing
+initial bundle size and improving Largest Contentful Paint (LCP).
+• Reduced bundle size significantly by applying tree-shaking, Webpack optimizations, and dependency
+audits, improving Time to Interactive (TTI) and overall load speed
+• Integrated performance monitoring tools such as Lighthouse and React Profiler to identify rendering
+bottlenecks, enabling targeted optimizations in script execution and component re-renders.
+• Advocated and practiced Test-Driven Development (TDD) with Jest, ensuring high test coverage,
+reduced regression defects, and improved release confidence.
+• Collaborated with cross-functional teams (designers via Figma, product owners, QA engineers, and
+DevOps) using Agile methodologies and JIRA for sprint planning and progress tracking.
+• Deployed and maintained applications on AWS, ensuring scalability, reliability, and CI/CD integration
+with GitHub pipelines.
+• Had limited exposure to Python, primarily for:
+Understanding backend workflows
+Reviewing API logic and request/response handling
+■ Supporting integration, debugging, and automation scripts where required
+- Images: There are logos for Thomson Reuters, Quest Global, and NICE next to their respective work experience entries. Also, the LinkedIn logo is present next to the link to the profile.
+
+Here is the OCR output for the second page of the document.
+
+# Text:
+Technical Skills
+Programming Languages: JavaScript, TypeScript, Python
+Frontend Frameworks/Libraries: React.js, Next.js, Redux Toolkit, Material-UI, Bootstrap, Styled-Components,
+Tailwind CSS
+Backend Technologies: Node.js, Express.js, REST APIs, GraphQL
+Databases: MongoDB, MySQL, PostgreSQL
+Testing Frameworks/Tools: Jest, React Testing Library, Playwright, Selenium
+DevOps Tools: Docker, Kubernetes, AWS (S3, CloudFormation, Route53), Jenkins, Git, GitHub, GitLab
+Other Tools: Visual Studio Code, Figma, JIRA, Confluence, Postman, Swagger, Lighthouse, Webpack, Babel,
+ESLint, Prettier, NPM, Yarn
+Professional Experience
+Software Development Engineer (NICE)
+May 2022 - Present
+Responsibilities:
+• Spearheaded frontend development efforts, focusing on creating reusable components, improving
+application performance, and ensuring cross-browser compatibility.
+• Worked on a large-scale React-based application, utilizing Redux Toolkit for efficient state management and
+implementing new features to enhance user experience.
+• Collaborated with UX designers to implement pixel-perfect designs and ensure a seamless user experience.
+• Conducted code reviews, provided technical guidance to junior developers, and enforced coding standards
+to maintain code quality.
+• Led performance optimization efforts, utilizing tools like Lighthouse and React Profiler to identify and resolve
+performance bottlenecks.
+• Integrated backend services with the frontend application, handling authentication, authorization, and data
+retrieval.
+• Developed and maintained automated tests using Jest and React Testing Library to ensure code reliability
+and prevent regressions.
+• Contributed to the development of technical documentation and best practices for frontend development.
+Software Engineer (Tata Consultancy Services)
+July 2016 - May 2022
+Responsibilities:
+• Developed and maintained web applications using React.js, JavaScript, HTML, and CSS.
+• Collaborated with cross-functional teams to gather requirements, design solutions, and implement new
+features.
+• Implemented responsive designs to ensure applications were accessible on various devices.
+• Conducted code reviews, provided technical guidance to junior developers, and enforced coding standards
+to maintain code quality.
+• Resolved production issues, ensuring minimal downtime and a smooth user experience.
+• Participated in agile development methodologies, including sprint planning, daily stand-ups, and sprint reviews.
+• Contributed to the development of technical documentation and best practices for frontend development.
+Education
+Bachelor of Technology in Computer Science
+Jawaharlal Nehru Technological University
+2012-2016
+Certifications
+AWS Certified Cloud Practitioner
+# Images:
+There are no images on this page.

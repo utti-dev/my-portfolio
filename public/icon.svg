@@ -1,0 +1,11 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="180" height="180" rx="40" fill="#0B0F14" />
+  <g stroke="#22D3D1" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- U -->
+    <path d="M50 50V120C50 134 61 145 75 145C89 145 100 134 100 120V50" />
+    <!-- R -->
+    <path d="M110 50V145" />
+    <path d="M110 50H145C154 50 160 56 160 65V80C160 89 154 95 145 95H110" />
+    <path d="M110 95L158 145" />
+  </g>
+</svg>
